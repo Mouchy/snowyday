@@ -1,0 +1,11 @@
+users:
+    type: rest
+    resource: SD\AppserverloginBundle\Controller\UserController
+
+sd_appserverlogin:
+    resource: "@SDAppserverloginBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
