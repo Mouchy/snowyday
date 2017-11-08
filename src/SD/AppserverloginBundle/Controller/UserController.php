@@ -24,17 +24,36 @@ class UserController extends FOSRestController implements ClassResourceInterface
         /* avec formatage json                                                                                                     */
         /* curl -X GET -H "Accept:application/json" https://snowyday-man.c9users.io/web/app_dev.php/locations | python -mjson.tool */
         /***************************************************************************************************************************/
-        echo("UsersController::cgetAction");
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->get('doctrine.orm.entity_manager');
         $repository = $em->getRepository("SDAppserverloginBundle:User");
         $users = $repository->findAll();
+
         return $users;
     }
     
     
-    public function getAction(User $user)
+     public function getAction($id)
     {
-        return $user;
+        $logger = $this->get('logger');
+        $logger->info('getAction');
+          $user = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('SDAppserverloginBundle:User')
+                ->find($id);
+                //->find($request->get('id'));
+        /* @var $user User */
+        $logger->info('getAction2');
+        $formatted = [
+           'id' => $user->getId(),
+           'Username' => $user->getUsername(),
+           'usernameCanonical' => $user->getusernameCanonical(),
+           'email' => $user->getEmail(),
+           'emailCanonical' => $user->getEmailCanonical(),
+           'password'    => $user->getPassword(),
+           'id'    => $user->getID(),
+        ];
+        $logger->info('getAction3');
+        
+        return $formatted;
     }
     
     /************************************************************************************************************************************************************************************************************/

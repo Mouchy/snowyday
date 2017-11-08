@@ -6,6 +6,7 @@ https://zestedesavoir.com/tutoriels/1280/creez-une-api-rest-avec-symfony-3/ameli
 
 Documentation Rest, FOSUser, FOSRestBundle, FosAuth et pas mal d'autres infos un peu tricky.
 https://bitgandtter.blog/2015/09/03/symfony-a-restful-app-motivation/
+
 Symfony commands
 ****************
 Vide le cache
@@ -35,7 +36,7 @@ Fichiers modifiés
 //app/config/routing.yml
 //app/config/parameters.yml
 //src\SD\AppserverloginBundle\Controller\UserController.php
-// src\SD/AppserverloginBundle/Form/Type/UserType.php
+// src/SD/AppserverloginBundle/Form/Type/UserType.php
 
 composer.json
 
