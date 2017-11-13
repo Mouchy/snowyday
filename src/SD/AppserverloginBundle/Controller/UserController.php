@@ -31,25 +31,23 @@ class UserController extends FOSRestController implements ClassResourceInterface
         return $users;
     }
     
-    
-     public function getAction($id)
+    public function getAction($id)
     {
         $logger = $this->get('logger');
         $logger->info('getAction');
           $user = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('SDAppserverloginBundle:User')
-                ->find($id);
+                ->find(array('id' => $id));
                 //->find($request->get('id'));
         /* @var $user User */
-        $logger->info('getAction2');
+        $logger->info('getAction2', array('id' => $user->getUsername()));
         $formatted = [
            'id' => $user->getId(),
-           'Username' => $user->getUsername(),
+           'username' => $user->getUsername(),
            'usernameCanonical' => $user->getusernameCanonical(),
            'email' => $user->getEmail(),
            'emailCanonical' => $user->getEmailCanonical(),
            'password'    => $user->getPassword(),
-           'id'    => $user->getID(),
         ];
         $logger->info('getAction3');
         
@@ -79,8 +77,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         if ($userForm->isValid()) {
             echo "isvalid";
-            $em = $this->getDoctrine()->getEntityManager();
-            print_r($user);
+            $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($user);
             $em->flush();
             return $user;
