@@ -36,7 +36,7 @@ Fichiers modifiés
 //app/config/routing.yml
 //app/config/parameters.yml
 //src\SD\AppserverloginBundle\Controller\UserController.php
-// src/SD/AppserverloginBundle/Form/Type/UserType.php
+// src/SD/AppserverloginBundle/Form/UserType.php
 
 composer.json
 
@@ -509,18 +509,17 @@ class UserController extends FOSRestController implements ClassResourceInterface
       
         $userForm->handleRequest($request);
       
-        if ($userForm->isSubmitted()) {
-            echo "isSubmitted";
-        }
-
-        if ($userForm->isValid()) {
-            echo "isvalid";
-            $em = $this->getDoctrine()->getEntityManager();
-            print_r($user);
-            $em->persist($user);
-            $em->flush();
-            return $user;
-        }
+        if ($userForm->isSubmitted()) {        
+	        if ($userForm->isValid()) {
+	            echo "isvalid";
+	            $em = $this->getDoctrine()->getEntityManager();
+	            print_r($user);
+	            $em->persist($user);
+	            $em->flush();
+	            return $user;
+	        }
+	    }
+	      
         echo "Isnt valid";
       
         return $userForm->getErrors();
@@ -622,6 +621,13 @@ Je n'ai pour l'instant pas utilisé ce bundle
 
 composer require nelmio/api-doc-bundles
 
+
+
+Login
+http://www.snowydayclient.dev/web/app_dev.php/login
+
+Enregistrement
+http://www.snowydayclient.dev/web/app_dev.php/register/
 
 
 

@@ -72,15 +72,13 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $userForm->handleRequest($request);
       
         if ($userForm->isSubmitted()) {
-            echo "isSubmitted";
-        }
-
-        if ($userForm->isValid()) {
+          if ($userForm->isValid()) {
             echo "isvalid";
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($user);
             $em->flush();
             return $user;
+          }
         }
         echo "Isnt valid";
       
