@@ -34,13 +34,16 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function getAction($id)
     {
         $logger = $this->get('logger');
-        $logger->info('getAction');
-          $user = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('SDAppserverloginBundle:User')
-                ->find(array('id' => $id));
+        $logger->info('getAction1');
+        $user = $this->get('doctrine.orm.entity_manager')
+        ->getRepository('SDAppserverloginBundle:User')
+        ->find(array('id' => $id));
+        
+        $logger->info('getAction2');
+          
                 //->find($request->get('id'));
         /* @var $user User */
-        $logger->info('getAction2', array('id' => $user->getUsername()));
+        $logger->info('getAction3', array('id' => $user->getUsername()));
         $formatted = [
            'id' => $user->getId(),
            'username' => $user->getUsername(),
@@ -54,6 +57,21 @@ class UserController extends FOSRestController implements ClassResourceInterface
         return $formatted;
     }
     
+    public function getUsernameAction($userinfos)
+    {
+        $logger = $this->get('logger');
+        $logger->info('getUsernameAction1');
+        $user = $this->get('doctrine.orm.entity_manager')
+        ->getRepository('SDAppserverloginBundle:User')
+        ->findOneByUsername(array('username' => $userinfos));
+        
+        $logger->info('getUsernameAction2');
+        
+        
+        return $user;
+    }
+    
+   
     /************************************************************************************************************************************************************************************************************/
     /* Creation d'un nouvel utilisateur dans la base de données                                                                                                                                                 */
     /* curl -v -X POST -H "Content-Type: application/json" -d '{"customer":{"username": "yasmany","email": "yasmanycm@gmail.com","password": "ok"}}' https://snowyday-man.c9users.io/web/app_dev.php/users      */
