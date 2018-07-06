@@ -75,6 +75,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
     /************************************************************************************************************************************************************************************************************/
     /* Creation d'un nouvel utilisateur dans la base de données                                                                                                                                                 */
     /* curl -v -X POST -H "Content-Type: application/json" -d '{"customer":{"username": "yasmany","email": "yasmanycm@gmail.com","password": "ok"}}' https://snowyday-man.c9users.io/web/app_dev.php/users      */
+    /* curl -v -X POST -H "Content-Type: application/json; charset=UTF-8" -d '{"customer":{"username": "yasmany","email": "yasmanycm@gmail.com","password": "ok"}}' http://www.snowyday.dev/web/app_dev.php/users */
+    /* Sous windows */ 
+    /* curl -v -X POST -H "Content-Type: application/json; charset=UTF-8" -d "{\"user\":{\"username\": \"yasmany\",\"email\": \"yasmanycm@gmail.com\",\"password\": \"ok\"}}" http://www.snowyday.dev/web/app_dev.php/users */  
     /* customer est le nom de la form et le reste les noms des champs                                                                                                                                           */
     /* la fonction handleRequest essaie de merger les données reçue ($request) avec la form $userForm                                                                                                           */
     /* isSubmitted vérifie que les données viennent bien de l'appuie du bouton submit de la form généré. Normalement on rentre une premiére fois dans la fonction postAction on génére le formulaire à l'écran  */
@@ -83,22 +86,28 @@ class UserController extends FOSRestController implements ClassResourceInterface
     /************************************************************************************************************************************************************************************************************/
     public function postAction(Request $request)
     {
-      
+        $logger = $this->get('logger');
+        $logger->info('request');
+        $logger->info($request);
+        $logger->info('UserController::postAction1');
+        dump($request);
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
-      
+        $logger->info('UserController::postAction2');
         $userForm->handleRequest($request);
-      
+        $logger->info('UserController::postAction3');
         if ($userForm->isSubmitted()) {
+          $logger->info('UserController::postAction4');
           if ($userForm->isValid()) {
-            echo "isvalid";
+            $logger->info('UserController::postAction5');
+            $logger->info($user->getPassword());
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($user);
             $em->flush();
             return $user;
           }
         }
-        echo "Isnt valid";
+        $logger->info('UserController::postAction6');
       
         return $userForm->getErrors();
     }
