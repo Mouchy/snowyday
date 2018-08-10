@@ -631,6 +631,10 @@ http://www.snowydayclient.dev/web/app_dev.php/register/
 
 
 
+Evenements symfony
+******************
+
+php bin/console debug:event-dispatcher
 
 
 
